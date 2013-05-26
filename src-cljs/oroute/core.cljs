@@ -19,10 +19,8 @@
    (.hide (js/$ "#image"))
    (let [image-file (js/$ "#imageFile")
          gpx-file (js/$ "#gpx")
-
          has-image (changes image-file)
          has-gpx (changes gpx-file)
-
          bus (js/Bacon.Bus.)
          image-loaded (.toProperty bus)
          ]
