@@ -15,10 +15,7 @@
 
 (defn handle-file [bus e]
   (m/log "handle file called" e)
-  (let [canvas (.getElementById js/document "canvas")
-        ctx (.getContext canvas "2d")
-        reader (js/FileReader.)]
-    (set! (.-globalAlpha ctx) 0.5)
+  (let [reader (js/FileReader.)]
     (set! (.-onload reader) 
           (fn [event]
             (m/log "File loaded" event)
@@ -27,13 +24,15 @@
              (fn []
                (this-as 
                 image
-                (m/log "Load image" image) 
-                (set! (.-width canvas) (.-width image))
-                (set! (.-height canvas) (.-height image))
-                (.drawImage ctx image 0 0 (.-width canvas) (.-height canvas))
-                (.push bus image)
-                )))
-            (.attr (js/$ "#image") "src" (aget reader "result"))))
+                (let [canvas (.getElementById js/document "canvas")
+                      ctx (.getContext canvas "2d")]
+                  (m/log "Load image" image)
+                  (set! (.-globalAlpha ctx) 0.5)
+                  (set! (.-width canvas) (.-width image))
+                  (set! (.-height canvas) (.-height image))
+                  (.drawImage ctx image 0 0 (.-width canvas) (.-height canvas))
+                  (.push bus {:type "imageloaded" :data image})))))
+             (.attr (js/$ "#image") "src" (aget reader "result"))))
     (let [target (aget e "target")
           files (aget target "files")
           fst (aget files 0)]

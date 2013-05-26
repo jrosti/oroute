@@ -23,5 +23,3 @@
      (.onValue has-image (enable "#gpx"))
      (.onValue image-loaded oroute.imgload/draw-route)
      (.onValue has-image (partial oroute.imgload/handle-file bus)))))
-;;     (.onValue has-image
-;;          (fn [_] oroute.imgload/draw-route)))))
