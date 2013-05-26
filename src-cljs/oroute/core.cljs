@@ -1,9 +1,12 @@
 (ns oroute.core
-	(:require [clojure.browser.repl :as repl]))
+  (:require-macros [oroute.js :as m])
+  (:require [clojure.browser.repl :as repl]))
 
 (repl/connect "http://localhost:9000/repl")
 
-(.ready (js/$ js/document) (fn [] 
-	(.log js/console "Document ready")
-	(.hide (js/$ "#image"))
-	(.change (js/$ "#file") oroute.imgload/handle-file)))
+(.ready 
+ (m/jquery js/document) 
+ (fn []
+   (m/log "Document ready")
+   (.hide (m/jquery "#image"))
+   (.change (m/jquery "#file") oroute.imgload/handle-file)))

@@ -1,4 +1,5 @@
 (ns oroute.routes
+  (:use compojure.core)
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
             [compojure.response :as response]))
