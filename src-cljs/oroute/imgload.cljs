@@ -13,7 +13,7 @@
     (.fill ctx)
     (.stroke ctx)))
 
-(defn handle-file [e]
+(defn handle-file [bus e]
   (m/log "handle file called" e)
   (let [canvas (.getElementById js/document "canvas")
         ctx (.getContext canvas "2d")
@@ -30,7 +30,9 @@
                 (m/log "Load image" image) 
                 (set! (.-width canvas) (.-width image))
                 (set! (.-height canvas) (.-height image))
-                (.drawImage ctx image 0 0 (.-width canvas) (.-height canvas)))))
+                (.drawImage ctx image 0 0 (.-width canvas) (.-height canvas))
+                (.push bus image)
+                )))
             (.attr (js/$ "#image") "src" (aget reader "result"))))
     (let [target (aget e "target")
           files (aget target "files")

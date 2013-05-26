@@ -15,8 +15,13 @@
    (.hide (js/$ "#image"))
    (let [image-file (js/$ "#imageFile")
          image-changes (.asEventStream image-file "change")
-         has-image (.toProperty (.map image-changes identity))]
+         has-image (.toProperty (.map image-changes identity))
+         image (js/$ "#image")
+         bus (js/Bacon.Bus.)
+         image-loaded (.toProperty bus)
+         ]
      (.onValue has-image (enable "#gpx"))
-     (.onValue has-image oroute.imgload/handle-file))))
+     (.onValue image-loaded oroute.imgload/draw-route)
+     (.onValue has-image (partial oroute.imgload/handle-file bus)))))
 ;;     (.onValue has-image
 ;;          (fn [_] oroute.imgload/draw-route)))))
