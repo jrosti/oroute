@@ -1,9 +1,7 @@
-(ns oroute.imgload
-	(:use-macros
- 		[dommy.macros :only [sel sel1]]))
+(ns oroute.imgload)
 
 
-(defn drawRoute[]
+(defn draw-route []
 	(let [canvas (.getElementById js/document "canvas")
 	  	  ctx (.getContext canvas "2d")]
 	  	  
@@ -16,7 +14,7 @@
 	 	(.fill ctx)
 	 	(.stroke ctx)))
 
-(defn handleFile[e]
+(defn handle-file [e]
 	(.log js/console "handle file called" e)
 	(let [canvas (.getElementById js/document "canvas")
 	  	  ctx (.getContext canvas "2d")

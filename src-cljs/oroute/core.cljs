@@ -6,4 +6,4 @@
 (.ready (js/$ js/document) (fn [] 
 	(.log js/console "Document ready")
 	(.hide (js/$ "#image"))
-	(.change (js/$ "#file") oroute.imgload/handleFile)))
+	(.change (js/$ "#file") oroute.imgload/handle-file)))

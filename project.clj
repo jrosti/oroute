@@ -1,5 +1,5 @@
-(defproject cljsbuild-example-simple "0.3.2"
-  :description "ORoute"
+(defproject oroute "0.0.1"
+  :description "oroute"
   :source-paths ["src-clj"]
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [compojure "1.0.4"]]
