@@ -6,7 +6,7 @@
         ctx (.getContext canvas "2d")]
     (set! (.-fillStyle ctx) "#F0F0F0")
     (set! (.-strokeStyle ctx) "#F0F0F0")
-    (.log js/console "Drawing a route" ctx)
+    (m/log "Drawing a route" ctx)
     (.beginPath ctx)
     (.moveTo ctx 10 10)
     (.lineTo ctx 1000 1000)
@@ -30,8 +30,7 @@
                 (m/log "Load image" image) 
                 (set! (.-width canvas) (.-width image))
                 (set! (.-height canvas) (.-height image))
-                (.drawImage ctx image 0 0 (.-width canvas) (.-height canvas)))
-               (draw-route)))
+                (.drawImage ctx image 0 0 (.-width canvas) (.-height canvas)))))
             (.attr (js/$ "#image") "src" (aget reader "result"))))
     (let [target (aget e "target")
           files (aget target "files")
