@@ -8,18 +8,24 @@
   (let [elem (js/$ elem-name)]
     (fn [_] (.removeAttr elem "disabled"))))
 
+(defn changes [elem]
+  (let [change-stream (.asEventStream elem "change")]
+    (.toProperty (.map change-stream identity))))
+
 (.ready 
  (js/$ js/document) 
  (fn []
    (m/log "Document ready")
    (.hide (js/$ "#image"))
    (let [image-file (js/$ "#imageFile")
-         image-changes (.asEventStream image-file "change")
-         has-image (.toProperty (.map image-changes identity))
-         image (js/$ "#image")
+         gpx-file (js/$ "#gpx")
+
+         has-image (changes image-file)
+         has-gpx (changes gpx-file)
+
          bus (js/Bacon.Bus.)
          image-loaded (.toProperty bus)
          ]
      (.onValue has-image (enable "#gpx"))
-     (.onValue image-loaded oroute.imgload/draw-route)
-     (.onValue has-image (partial oroute.imgload/handle-file bus)))))
+     (.onValue has-gpx (partial oroute.imgload/handle-gpx-file bus))
+     (.onValue has-image (partial oroute.imgload/handle-image-file bus)))))

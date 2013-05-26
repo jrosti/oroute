@@ -13,7 +13,22 @@
     (.fill ctx)
     (.stroke ctx)))
 
-(defn handle-file [bus e]
+(defn handle-gpx-file [bus e]
+  (m/log "handle gpx file called" e)
+  (let [reader (js/FileReader.)
+        elem (js/$ "#gpx")]
+    (set! (.-onload reader) 
+          (fn [event]
+            (m/log "Got GPX data: " (aget (aget event "target") "result"))
+            (draw-route)
+            (.push bus {:type "gpxloaded" :data gpx})))
+    (let [target (aget e "target")
+          files (aget target "files")
+          fst (aget files 0)]
+      (m/log (.readAsText reader fst)))))
+
+
+(defn handle-image-file [bus e]
   (m/log "handle file called" e)
   (let [reader (js/FileReader.)]
     (set! (.-onload reader) 
